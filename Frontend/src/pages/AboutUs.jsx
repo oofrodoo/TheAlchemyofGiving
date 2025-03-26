@@ -1,21 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavBar";
-import Hero from "../assets/hero.avif"; // You may want to use a different hero image for About page
-import Footer from "../components/Footer";
-import {
-  Users,
-  Heart,
-  Target,
-  ShieldCheck,
-  Globe,
-  Clock,
-} from "lucide-react";
+import Hero from "../assets/hero.avif"; // use a different hero image for About page
+import { Users, Heart, Target, ShieldCheck, Globe, Clock } from "lucide-react";
 
 const AboutUs = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
-
       {/* Hero Section */}
       <div className="w-full h-[90vh] flex items-center justify-center text-center relative">
         <div
@@ -43,9 +34,10 @@ const AboutUs = () => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Mission</h2>
           <p className="text-lg text-gray-600 mb-12">
-            We believe in the power of collective giving to create meaningful change. 
-            Our platform connects passionate donors with impactful causes, making the 
-            process of giving transparent, efficient, and accessible to everyone.
+            We believe in the power of collective giving to create meaningful
+            change. Our platform connects passionate donors with impactful
+            causes, making the process of giving transparent, efficient, and
+            accessible to everyone.
           </p>
         </div>
       </div>
@@ -82,23 +74,23 @@ const AboutUs = () => {
             <h3 className="text-xl font-medium text-stone-800 mb-2">
               Compassion
             </h3>
-            <p className="text-gray-600">Empowering positive change through giving</p>
+            <p className="text-gray-600">
+              Empowering positive change through giving
+            </p>
           </div>
 
           <div className="flex flex-col items-center text-center p-4">
             <ShieldCheck className="w-12 h-12 stroke-green-500 stroke-1 mb-4" />
-            <h3 className="text-xl font-medium text-stone-800 mb-2">
-              Trust
-            </h3>
+            <h3 className="text-xl font-medium text-stone-800 mb-2">Trust</h3>
             <p className="text-gray-600">Building transparent relationships</p>
           </div>
 
           <div className="flex flex-col items-center text-center p-4">
             <Target className="w-12 h-12 stroke-green-500 stroke-1 mb-4" />
-            <h3 className="text-xl font-medium text-stone-800 mb-2">
-              Impact
-            </h3>
-            <p className="text-gray-600">Maximizing the effect of every donation</p>
+            <h3 className="text-xl font-medium text-stone-800 mb-2">Impact</h3>
+            <p className="text-gray-600">
+              Maximizing the effect of every donation
+            </p>
           </div>
         </div>
       </div>
@@ -112,17 +104,23 @@ const AboutUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-200"></div>
-              <h3 className="text-xl font-medium text-stone-800 mb-2">Sarah Johnson</h3>
+              <h3 className="text-xl font-medium text-stone-800 mb-2">
+                Sarah Johnson
+              </h3>
               <p className="text-gray-600">Founder & CEO</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-200"></div>
-              <h3 className="text-xl font-medium text-stone-800 mb-2">Michael Chen</h3>
+              <h3 className="text-xl font-medium text-stone-800 mb-2">
+                Michael Chen
+              </h3>
               <p className="text-gray-600">CTO</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-200"></div>
-              <h3 className="text-xl font-medium text-stone-800 mb-2">Emily Taylor</h3>
+              <h3 className="text-xl font-medium text-stone-800 mb-2">
+                Emily Taylor
+              </h3>
               <p className="text-gray-600">Head of Operations</p>
             </div>
           </div>
@@ -140,8 +138,6 @@ const AboutUs = () => {
           </button>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

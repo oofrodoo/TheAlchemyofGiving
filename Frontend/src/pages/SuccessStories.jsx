@@ -10,7 +10,6 @@ import {
   Users,
   TrendingUp,
 } from "lucide-react";
-import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import studyingImg from "../assets/studying.jpg";
 import ruralHouseImg from "../assets/ruralhouse.jpg";
@@ -263,8 +262,6 @@ const SuccessStories = () => {
           </motion.button>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Search } from 'lucide-react';
-import Footer from "../components/Footer";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Search } from "lucide-react";
 
 const FAQ = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [openItems, setOpenItems] = useState({});
 
   const faqData = [
@@ -13,69 +12,81 @@ const FAQ = () => {
       questions: [
         {
           question: "How do I start a fundraiser?",
-          answer: "Starting a fundraiser is easy! Click the 'Start a Fundraiser' button, fill in your campaign details, add photos or videos, set your goal, and share your story. We'll guide you through each step."
+          answer:
+            "Starting a fundraiser is easy! Click the 'Start a Fundraiser' button, fill in your campaign details, add photos or videos, set your goal, and share your story. We'll guide you through each step.",
         },
         {
           question: "Is there a fee to create a fundraiser?",
-          answer: "No, creating a fundraiser is completely free. We only charge a small processing fee on donations to cover transaction costs and platform maintenance."
+          answer:
+            "No, creating a fundraiser is completely free. We only charge a small processing fee on donations to cover transaction costs and platform maintenance.",
         },
         {
           question: "What types of fundraisers can I create?",
-          answer: "You can create fundraisers for various causes including medical expenses, education, community projects, creative projects, and more. All fundraisers must comply with our terms of service."
-        }
-      ]
+          answer:
+            "You can create fundraisers for various causes including medical expenses, education, community projects, creative projects, and more. All fundraisers must comply with our terms of service.",
+        },
+      ],
     },
     {
       category: "Donations",
       questions: [
         {
           question: "How quickly will I receive my donations?",
-          answer: "Donations are typically processed within 2-5 business days and transferred directly to your connected bank account."
+          answer:
+            "Donations are typically processed within 2-5 business days and transferred directly to your connected bank account.",
         },
         {
           question: "Can I donate anonymously?",
-          answer: "Yes, you can choose to make your donation anonymous during the checkout process. Your name won't be displayed publicly."
+          answer:
+            "Yes, you can choose to make your donation anonymous during the checkout process. Your name won't be displayed publicly.",
         },
         {
           question: "Is my donation tax-deductible?",
-          answer: "Tax deductibility depends on the type of fundraiser and the organization. Donations to verified nonprofit organizations are typically tax-deductible."
-        }
-      ]
+          answer:
+            "Tax deductibility depends on the type of fundraiser and the organization. Donations to verified nonprofit organizations are typically tax-deductible.",
+        },
+      ],
     },
     {
       category: "Campaign Management",
       questions: [
         {
           question: "Can I edit my fundraiser after launching?",
-          answer: "Yes, you can edit your fundraiser's details, updates, and images at any time through your dashboard."
+          answer:
+            "Yes, you can edit your fundraiser's details, updates, and images at any time through your dashboard.",
         },
         {
           question: "How do I share my fundraiser?",
-          answer: "You can share your fundraiser through social media, email, or by copying your unique campaign link from your dashboard."
+          answer:
+            "You can share your fundraiser through social media, email, or by copying your unique campaign link from your dashboard.",
         },
         {
           question: "Can I set up recurring donations?",
-          answer: "Yes, donors have the option to set up monthly recurring donations to support your cause long-term."
-        }
-      ]
-    }
+          answer:
+            "Yes, donors have the option to set up monthly recurring donations to support your cause long-term.",
+        },
+      ],
+    },
   ];
 
   const toggleItem = (categoryIndex, questionIndex) => {
     const key = `${categoryIndex}-${questionIndex}`;
-    setOpenItems(prev => ({
+    setOpenItems((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
   };
 
-  const filteredFAQ = faqData.map(category => ({
-    ...category,
-    questions: category.questions.filter(item =>
-      item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.answer.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  })).filter(category => category.questions.length > 0);
+  const filteredFAQ = faqData
+    .map((category) => ({
+      ...category,
+      questions: category.questions.filter(
+        (item) =>
+          item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.answer.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    }))
+    .filter((category) => category.questions.length > 0);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -159,7 +170,6 @@ const FAQ = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
