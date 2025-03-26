@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const NavigationBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,7 +13,7 @@ const NavigationBar = () => {
         setIsAboutDropdownOpen(false);
       }
     }
-    
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -34,61 +34,69 @@ const NavigationBar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <div className="flex space-x-8 font-medium text-gray-700">
-              <Link to="/home" className="hover:text-green-700 transition duration-200">
+              <Link
+                to="/home"
+                className="hover:text-green-700 transition duration-200"
+              >
                 Home
               </Link>
-              
+
               {/* About Us with Dropdown */}
-              <div 
+              <div
                 className="relative"
                 ref={dropdownRef}
                 onMouseEnter={() => setIsAboutDropdownOpen(true)}
                 onMouseLeave={() => setIsAboutDropdownOpen(false)}
               >
-                <button 
+                <button
                   onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
                   className="hover:text-green-700 transition duration-200 flex items-center font-medium text-gray-700 focus:outline-none"
                 >
                   About Us
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-4 w-4 ml-1" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
-                
+
                 {/* Dropdown Menu */}
                 {isAboutDropdownOpen && (
                   <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-100">
-                    <Link 
-                      to="/aboutus" 
+                    <Link
+                      to="/aboutus"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
                       About Us
                     </Link>
 
-                    <Link 
-                      to="/acceptableitems" 
+                    <Link
+                      to="/acceptableitems"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
                       Acceptable Items
                     </Link>
 
-                    <Link 
-                      to="/success" 
+                    <Link
+                      to="/success"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
                       Success Stories
                     </Link>
-                    <Link 
-                      to="/faq" 
+                    <Link
+                      to="/faq"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
@@ -97,35 +105,62 @@ const NavigationBar = () => {
                   </div>
                 )}
               </div>
-              
-              <Link to="/contact" className="hover:text-green-700 transition duration-200">
+
+              <Link
+                to="/contact"
+                className="hover:text-green-700 transition duration-200"
+              >
                 Contact Us
               </Link>
             </div>
-            <Link 
-              to="/donate" 
-              className="bg-green-500 text-white px-6 py-2 rounded-full font-medium hover:bg-green-700 transition duration-200"
-            >
-              Donate
-            </Link>
+            <div className="flex items-center space-x-4">
+              <Link
+                to="/login"
+                className="border-2 border-gray-500 text-gray-700 px-4 py-1 rounded-full font-medium hover:bg-gray-500 hover:text-white transition duration-200"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="border-2 border-green-500 text-green-500 px-4 py-1 rounded-full font-medium hover:bg-green-500 hover:text-white transition duration-200"
+              >
+                Sign Up
+              </Link>
+              <Link
+                to="/donate"
+                className="bg-green-500 text-white px-6 py-2 rounded-full font-medium hover:bg-green-700 transition duration-200"
+              >
+                Donate
+              </Link>
+            </div>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-green-500 focus:outline-none"
             >
-              <svg 
-                className="h-6 w-6" 
-                fill="none" 
-                viewBox="0 0 24 24" 
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
               </svg>
             </button>
@@ -135,15 +170,15 @@ const NavigationBar = () => {
         {/* Mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden mt-3 pb-2">
-            <Link 
-              to="/home" 
+            <Link
+              to="/home"
               className="block py-2 px-4 text-green-700 hover:bg-gray-100 hover:text-green-700"
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
-            <Link 
-              to="/aboutus" 
+            <Link
+              to="/aboutus"
               className="block py-2 px-4 text-green-700 hover:bg-gray-100 hover:text-green-700"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -169,15 +204,29 @@ const NavigationBar = () => {
                 FAQ
               </span>
             </Link> */}
-            <Link 
-              to="/contact" 
+            <Link
+              to="/contact"
               className="block py-2 px-4 text-green-700 hover:bg-gray-100 hover:text-green-700"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact Us
             </Link>
-            <Link 
-              to="/donate" 
+            <Link
+              to="/login"
+              className="block py-2 px-4 mt-2 border-2 border-gray-500 text-gray-700 rounded-md text-center font-medium hover:bg-gray-500 hover:text-white transition duration-200"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="block py-2 px-4 text-green-700 hover:bg-gray-100 hover:text-green-700"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Sign Up
+            </Link>
+            <Link
+              to="/donate"
               className="block py-2 px-4 mt-2 bg-green-700 text-white rounded-md text-center font-medium"
               onClick={() => setIsMenuOpen(false)}
             >

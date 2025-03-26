@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, MessageCircle, Clock, Send, AlertCircle } from 'lucide-react';
-import Footer from '../components/Footer';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Clock,
+  Send,
+  AlertCircle,
+} from "lucide-react";
+import Footer from "../components/Footer";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,29 +26,28 @@ const ContactUs = () => {
   // Form validation
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = "Email is invalid";
     }
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    if (!formData.message.trim()) newErrors.message = "Message is required";
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
-    
+
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
       try {
-        // Simulated API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
       } catch (error) {
-        setSubmitStatus('error');
+        setSubmitStatus("error");
       }
       setIsSubmitting(false);
     } else {
@@ -63,20 +70,35 @@ const ContactUs = () => {
               Get in Touch
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              We're here to help and answer any questions you might have.
-              We look forward to hearing from you.
+              We're here to help and answer any questions you might have. We
+              look forward to hearing from you.
             </p>
           </motion.div>
         </div>
       </div>
 
-      {/* Contact Information Cards */}
-      <div className="max-w-7xl mx-auto px-4 -mt-10">
+      <div className="max-w-7xl mx-auto px-4 mt-20">
+        {" "}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { icon: Phone, title: 'Call Us', info: '+1 (555) 123-4567', time: '24/7 Support' },
-            { icon: Mail, title: 'Email Us', info: 'support@alchemyofgiving.org', time: 'Response within 24hrs' },
-            { icon: MapPin, title: 'Visit Us', info: '123 Charity Street, NY 10001', time: 'Mon-Fri: 9AM-6PM' }
+            {
+              icon: Phone,
+              title: "Call Us",
+              info: "+1 (555) 123-4567",
+              time: "24/7 Support",
+            },
+            {
+              icon: Mail,
+              title: "Email Us",
+              info: "support@alchemyofgiving.org",
+              time: "Response within 24hrs",
+            },
+            {
+              icon: MapPin,
+              title: "Visit Us",
+              info: "123 Charity Street, NY 10001",
+              time: "Mon-Fri: 9AM-6PM",
+            },
           ].map((item, index) => (
             <motion.div
               key={index}
@@ -90,7 +112,9 @@ const ContactUs = () => {
                   <item.icon className="w-6 h-6 text-green-600" />
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {item.title}
+                  </h3>
                   <p className="text-gray-600">{item.info}</p>
                 </div>
               </div>
@@ -118,9 +142,11 @@ const ContactUs = () => {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none transition-colors duration-200 ${
-                      errors.name ? 'border-red-500' : 'border-gray-300'
+                      errors.name ? "border-red-500" : "border-gray-300"
                     }`}
                   />
                   {errors.name && (
@@ -135,9 +161,11 @@ const ContactUs = () => {
                   <input
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none transition-colors duration-200 ${
-                      errors.email ? 'border-red-500' : 'border-gray-300'
+                      errors.email ? "border-red-500" : "border-gray-300"
                     }`}
                   />
                   {errors.email && (
@@ -152,7 +180,9 @@ const ContactUs = () => {
                   <input
                     type="text"
                     value={formData.subject}
-                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, subject: e.target.value })
+                    }
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none transition-colors duration-200"
                   />
                 </div>
@@ -163,14 +193,18 @@ const ContactUs = () => {
                   </label>
                   <textarea
                     value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     rows={5}
                     className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none transition-colors duration-200 ${
-                      errors.message ? 'border-red-500' : 'border-gray-300'
+                      errors.message ? "border-red-500" : "border-gray-300"
                     }`}
                   />
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.message}
+                    </p>
                   )}
                 </div>
 
@@ -182,7 +216,11 @@ const ContactUs = () => {
                   {isSubmitting ? (
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="w-6 h-6 border-2 border-white border-t-transparent rounded-full"
                     />
                   ) : (
@@ -198,16 +236,16 @@ const ContactUs = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className={`p-4 rounded-lg ${
-                      submitStatus === 'success' 
-                        ? 'bg-green-100 text-green-700' 
-                        : 'bg-red-100 text-red-700'
+                      submitStatus === "success"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
                     }`}
                   >
                     <div className="flex items-center">
                       <AlertCircle className="w-5 h-5 mr-2" />
-                      {submitStatus === 'success' 
-                        ? 'Message sent successfully!' 
-                        : 'Error sending message. Please try again.'}
+                      {submitStatus === "success"
+                        ? "Message sent successfully!"
+                        : "Error sending message. Please try again."}
                     </div>
                   </motion.div>
                 )}
@@ -262,7 +300,6 @@ const ContactUs = () => {
           </motion.div>
         )}
       </motion.div>
-
     </div>
   );
 };

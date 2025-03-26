@@ -1,5 +1,5 @@
-import { Navigate, useLocation } from 'react-router-dom';
-import { authService } from '../services/auth';
+import { Navigate, useLocation } from "react-router-dom";
+import { authService } from "../services/auth";
 
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
@@ -12,4 +12,4 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-export default ProtectedRoute; 
+export default ProtectedRoute;

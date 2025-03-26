@@ -17,11 +17,10 @@ import {
 
 const Home = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center ">
+    <div className="w-full h-full flex flex-col items-center justify-center">
       {/* Hero Section */}
       <div className="w-full h-[100vh] flex items-center justify-center text-center relative">
-        <div className="absolute top-0 left-0 right-0 ">
-        </div>
+        <div className="absolute top-0 left-0 right-0 "></div>
 
         {/* Background Image with Opacity */}
         <div
@@ -164,7 +163,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
