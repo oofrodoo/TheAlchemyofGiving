@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   // Handle clicks outside of dropdown to close it
   useEffect(() => {
@@ -19,6 +20,11 @@ const NavigationBar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
+  const handleDropdownClick = (path) => {
+    setIsAboutDropdownOpen(false);
+    navigate(path);
+  };
 
   return (
     <nav className="bg-transparent shadow-md sticky top-0 z-50 w-full backdrop-blur-sm">
@@ -42,20 +48,17 @@ const NavigationBar = () => {
               </Link>
 
               {/* About Us with Dropdown */}
-              <div
-                className="relative"
-                ref={dropdownRef}
-                onMouseEnter={() => setIsAboutDropdownOpen(true)}
-                onMouseLeave={() => setIsAboutDropdownOpen(false)}
-              >
+              <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
-                  className="hover:text-green-700 transition duration-200 flex items-center font-medium text-gray-700 focus:outline-none"
+                  className="hover:text-green-700 transition duration-200 flex items-center font-medium text-gray-700 focus:outline-none cursor-pointer"
                 >
                   About Us
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 ml-1"
+                    className={`h-4 w-4 ml-1 transform transition-transform duration-200 ${
+                      isAboutDropdownOpen ? "rotate-180" : ""
+                    }`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -74,7 +77,7 @@ const NavigationBar = () => {
                   <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-100">
                     <Link
                       to="/aboutus"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left cursor-pointer"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
                       About Us
@@ -82,7 +85,7 @@ const NavigationBar = () => {
 
                     <Link
                       to="/acceptableitems"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left cursor-pointer"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
                       Acceptable Items
@@ -90,14 +93,14 @@ const NavigationBar = () => {
 
                     <Link
                       to="/success"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left cursor-pointer"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
                       Success Stories
                     </Link>
                     <Link
                       to="/faq"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-700 w-full text-left cursor-pointer"
                       onClick={() => setIsAboutDropdownOpen(false)}
                     >
                       FAQ

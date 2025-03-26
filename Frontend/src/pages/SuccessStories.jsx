@@ -1,49 +1,57 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Heart, 
-  Share2, 
-  ThumbsUp, 
-  MessageCircle, 
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Heart,
+  Share2,
+  ThumbsUp,
+  MessageCircle,
   ArrowRight,
   Calendar,
   Users,
-  TrendingUp
-} from 'lucide-react';
-import Footer from '../components/Footer';
+  TrendingUp,
+} from "lucide-react";
+import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
+import studyingImg from "../assets/studying.jpg";
+import ruralHouseImg from "../assets/ruralhouse.jpg";
 
 const SuccessStories = () => {
+  const navigate = useNavigate();
   const [selectedStory, setSelectedStory] = useState(null);
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
 
   const stories = [
     {
       id: 1,
-      category: 'education',
+      category: "education",
       title: "Digital Learning for Rural Schools",
       beneficiary: "Rural Education Foundation",
-      image: "https://source.unsplash.com/random/800x600?school",
-      description: "Provided 100 laptops to underprivileged students, enabling remote learning during the pandemic.",
+      image: studyingImg,
+      description:
+        "Provided 100 laptops to underprivileged students, enabling remote learning during the pandemic.",
       impact: "1,200+ students benefited",
       date: "March 2024",
-      testimonial: "These laptops have transformed our ability to provide quality education...",
+      testimonial:
+        "These laptops have transformed our ability to provide quality education...",
       likes: 234,
       comments: 45,
-      shares: 89
+      shares: 89,
     },
     {
       id: 2,
-      category: 'household',
+      category: "household",
       title: "Home Essentials for New Families",
       beneficiary: "Family Support Network",
-      image: "https://source.unsplash.com/random/800x600?family",
-      description: "Furnished 25 homes for families transitioning from temporary housing.",
+      image: ruralHouseImg,
+      description:
+        "Furnished 25 homes for families transitioning from temporary housing.",
       impact: "25 families supported",
       date: "February 2024",
-      testimonial: "Having a fully furnished home has given us stability and hope...",
+      testimonial:
+        "Having a fully furnished home has given us stability and hope...",
       likes: 567,
       comments: 78,
-      shares: 156
+      shares: 156,
     },
     // Add more success stories as needed
   ];
@@ -51,11 +59,16 @@ const SuccessStories = () => {
   const impactMetrics = [
     { icon: Users, value: "5,000+", label: "Lives Impacted" },
     { icon: Heart, value: "$2.4M", label: "Value Donated" },
-    { icon: TrendingUp, value: "89%", label: "Success Rate" }
+    { icon: TrendingUp, value: "89%", label: "Success Rate" },
   ];
 
   const filterStories = (category) => {
     setFilter(category);
+  };
+
+  // Add this function to handle navigation
+  const handleDonateClick = () => {
+    navigate("/donateform");
   };
 
   return (
@@ -80,7 +93,8 @@ const SuccessStories = () => {
             Our Success Stories
           </motion.h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Witness the impact of your generosity through real stories of transformation
+            Witness the impact of your generosity through real stories of
+            transformation
           </p>
         </div>
       </div>
@@ -97,7 +111,9 @@ const SuccessStories = () => {
               className="bg-white rounded-xl shadow-lg p-8 text-center"
             >
               <metric.icon className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">{metric.value}</h3>
+              <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                {metric.value}
+              </h3>
               <p className="text-gray-600">{metric.label}</p>
             </motion.div>
           ))}
@@ -107,16 +123,18 @@ const SuccessStories = () => {
       {/* Filter Buttons */}
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {['all', 'education', 'household', 'clothing'].map((category) => (
+          {["all", "education", "household", "clothing"].map((category) => (
             <motion.button
               key={category}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => filterStories(category)}
               className={`px-6 py-2 rounded-full font-medium transition-colors duration-200 
-                ${filter === category 
-                  ? 'bg-green-500 text-white' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                ${
+                  filter === category
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </motion.button>
@@ -126,7 +144,7 @@ const SuccessStories = () => {
         {/* Stories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {stories
-            .filter(story => filter === 'all' || story.category === filter)
+            .filter((story) => filter === "all" || story.category === filter)
             .map((story) => (
               <motion.div
                 key={story.id}
@@ -150,7 +168,7 @@ const SuccessStories = () => {
                     {story.title}
                   </h3>
                   <p className="text-gray-600 mb-4">{story.description}</p>
-                  
+
                   <div className="flex items-center justify-between text-sm text-gray-500">
                     <div className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
@@ -201,8 +219,10 @@ const SuccessStories = () => {
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
                   {selectedStory.title}
                 </h2>
-                <p className="text-gray-600 mb-6">{selectedStory.description}</p>
-                
+                <p className="text-gray-600 mb-6">
+                  {selectedStory.description}
+                </p>
+
                 <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                   <p className="text-green-800 italic">
                     "{selectedStory.testimonial}"
@@ -234,6 +254,7 @@ const SuccessStories = () => {
             Be Part of Our Next Success Story
           </h2>
           <motion.button
+            onClick={handleDonateClick}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-white text-green-600 px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-200"
