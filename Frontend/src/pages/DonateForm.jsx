@@ -15,11 +15,56 @@ const DonateForm = () => {
     image: null,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted:", formData);
 
+    // Create new donation with unique ID and pending status
+    const newDonation = {
+      ...formData,
+      id: Date.now(),
+      status: "pending",
+      date: new Date().toISOString().split("T")[0],
+    };
+
+    // Handle image if present
+    if (formData.image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Save donation with image data URL
+        const donationWithImage = {
+          ...newDonation,
+          image: reader.result,
+        };
+
+        // Get existing donations and add new one
+        const existingDonations = JSON.parse(
+          localStorage.getItem("donations") || "[]"
+        );
+        localStorage.setItem(
+          "donations",
+          JSON.stringify([...existingDonations, donationWithImage])
+        );
+
+        // Show success message
+        showSuccessMessage();
+      };
+      reader.readAsDataURL(formData.image);
+    } else {
+      // Save donation without image
+      const existingDonations = JSON.parse(
+        localStorage.getItem("donations") || "[]"
+      );
+      localStorage.setItem(
+        "donations",
+        JSON.stringify([...existingDonations, newDonation])
+      );
+
+      // Show success message
+      showSuccessMessage();
+    }
+  };
+
+  const showSuccessMessage = () => {
     Swal.fire({
       icon: "success",
       title: "Thank You for Your Generous Donation!",

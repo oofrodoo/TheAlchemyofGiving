@@ -14,6 +14,7 @@ import LandingPage from "./pages/LandingPage";
 import AcceptableItems from "./pages/Acceptableitems";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DonateForm from "./pages/DonateForm";
+import DonatedItems from "./pages/DonatedItems";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/donateform" element={<DonateForm />} />
+            <Route path="/donated-items" element={<DonatedItems />} />
           </Route>
         </Routes>
       </Router>
