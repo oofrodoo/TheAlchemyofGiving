@@ -24,20 +24,17 @@ npm install
 
 ### Step 2: Database Setup
 
-```powershell
-# Create .env file in Backend folder
-cd Backend
-copy .env.example .env
-
-# Update .env with your PostgreSQL password
-notepad .env
+#update .env ma timro postgres ko password
 
 # Initialize database
+
 psql -U postgres -f database.sql
 
 # Create admin user
+
 node scripts/createAdmin.js
-```
+
+````
 
 ### Step 3: Start Application
 
@@ -49,7 +46,7 @@ npm run dev
 # Terminal 2: Start Frontend
 cd Frontend
 npm run dev
-```
+````
 
 ### Default Admin Credentials
 
