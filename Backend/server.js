@@ -118,7 +118,29 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Test database connection
+const testDbConnection = async () => {
+  try {
+    const client = await pool.connect();
+    console.log("✅ PostgreSQL database connected successfully");
+    client.release();
+  } catch (err) {
+    console.error("❌ PostgreSQL connection error:", err.message);
+    process.exit(1);
+  }
+};
+
+// Start server after testing database connection
+const startServer = async () => {
+  try {
+    await testDbConnection();
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error);
+    process.exit(1);
+  }
+};
+
+startServer();

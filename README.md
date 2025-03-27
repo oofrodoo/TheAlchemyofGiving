@@ -51,12 +51,53 @@ DB_DATABASE=alchemy_giving
 ```powershell
 # Terminal 1 - Start Backend
 cd Backend
+
+# If port 5001 is in use, kill the process:
+netstat -ano | findstr :5001
+taskkill /PID <PID> /F
+
+# Then start the server
 npm run dev
 
 # Terminal 2 - Start Frontend
 cd Frontend
 npm run dev
 ```
+
+### Troubleshooting
+
+#### Port Already in Use
+
+If you see error `EADDRINUSE: address already in use :::5001`:
+
+1. Find the process using port 5001:
+
+```powershell
+netstat -ano | findstr :5001
+```
+
+2. Kill the process (replace XXXX with PID from above PID bhaneko right pati 3-4 digit ko number huncha):
+
+```powershell
+taskkill /PID XXXX /F
+```
+
+3. Restart the backend server:
+
+```powershell
+npm run dev
+```
+
+#### Alternative Solution
+
+If you can't kill the process, you can change the port in:
+
+```javascript
+// filepath: Backend/server.js
+const PORT = process.env.PORT || 5002; // Change to different port
+```
+
+Remember to update your frontend API calls if you change the port.
 
 ### Admin Login
 
