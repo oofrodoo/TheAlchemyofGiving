@@ -1,9 +1,59 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.firstName + " " + formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful!",
+          text: "You can now log in with your credentials",
+        }).then(() => {
+          navigate("/login");
+        });
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("Failed to connect to server");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-lime-100">
       <div className="flex min-h-[calc(100vh-64px)] items-center justify-center py-12 px-4">
@@ -42,7 +92,7 @@ const SignUp = () => {
             Create an account to start donating and making a difference.
           </p>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
               <div className="relative">
                 <label
@@ -74,6 +124,10 @@ const SignUp = () => {
                     className="w-full pl-10 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm transition duration-200"
                     placeholder="First Name"
                     required
+                    value={formData.firstName}
+                    onChange={(e) =>
+                      setFormData({ ...formData, firstName: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -91,6 +145,10 @@ const SignUp = () => {
                   className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm transition duration-200"
                   placeholder="Last Name"
                   required
+                  value={formData.lastName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, lastName: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -125,6 +183,10 @@ const SignUp = () => {
                   className="w-full pl-10 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm transition duration-200"
                   placeholder="Enter your email"
                   required
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -159,6 +221,10 @@ const SignUp = () => {
                   className="w-full pl-10 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm transition duration-200"
                   placeholder="Create a password"
                   required
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 />
               </div>
               <p className="text-xs text-gray-500 mt-1">
@@ -196,6 +262,13 @@ const SignUp = () => {
                   className="w-full pl-10 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm transition duration-200"
                   placeholder="Confirm your password"
                   required
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
                 />
               </div>
             </div>
@@ -250,6 +323,8 @@ const SignUp = () => {
               </svg>
             </button>
           </form>
+
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
           <p className="text-center text-gray-600 text-sm mt-6">
             Already have an account?{" "}

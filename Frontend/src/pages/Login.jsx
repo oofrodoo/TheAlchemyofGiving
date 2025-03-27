@@ -3,25 +3,36 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
 
-  // Hardcoded credentials
-  const validEmail = "user@example.com";
-  const validPassword = "password123";
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (email === validEmail && password === validPassword) {
-      // Set admin status in localStorage
-      localStorage.setItem("isAdmin", "true");
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/home"); // Redirect to Home Page
-      setError("");
-    } else {
-      setError("Invalid email or password!");
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("isLoggedIn", "true");
+        if (data.user.role === "admin") {
+          localStorage.setItem("isAdmin", "true");
+        }
+        navigate("/home");
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("Failed to connect to server");
     }
   };
 
@@ -46,8 +57,10 @@ const Login = () => {
               type="email"
               className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500"
               placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               required
             />
           </div>
@@ -60,8 +73,10 @@ const Login = () => {
               type="password"
               className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500"
               placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               required
             />
           </div>
