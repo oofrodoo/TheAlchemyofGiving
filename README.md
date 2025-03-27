@@ -15,6 +15,7 @@
 
 ```bash
 psql -U postgres
+postgres password magcha install garda rakheko password dinu!
 ```
 
 3. Run the initialization script:
@@ -25,11 +26,11 @@ psql -U postgres
 
 ### Environment Setup
 
-1. Create a `.env` file in the Backend folder:
+1. Create a `.env` file in the Backend folder: tara backend folder ma already .env cha tesma timro postgres ko password matra rakhda huncha.
 
 ```env
 DB_USER=postgres
-DB_PASSWORD=your_password
+DB_PASSWORD=your_postgres_password
 DB_HOST=localhost
 DB_PORT=5432
 DB_DATABASE=alchemy_giving
