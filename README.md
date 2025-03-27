@@ -11,18 +11,19 @@
 ### Database Setup
 
 1. Install PostgreSQL if not already installed
-2. Open terminal and login to PostgreSQL:
+2. Open terminal and navigate to project directory:
 
-```bash
-psql -U postgres
-postgres password magcha install garda rakheko password dinu!
+```powershell
+cd E:\Aag\SYP\TheAlchemyofGiving
 ```
 
-3. Run the initialization script:
+3. Run the database script:
 
-```bash
-\i Backend/db/init.sql
+```powershell
+psql -U postgres -f Backend\database.sql
 ```
+
+When prompted, enter your PostgreSQL password that you set during installation.
 
 ### Environment Setup
 
@@ -58,7 +59,7 @@ npm run dev
 
 ### Frontend Setup
 
-1. Navigate to Frontend folder new terminal ma!!:
+1. Navigate to Frontend folder _new terminal ma_!!:
 
 ```bash
 cd Frontend
