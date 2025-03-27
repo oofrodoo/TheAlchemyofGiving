@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const pool = require("./config/db");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001; // Changed to 5001
 
 // Middleware
 app.use(cors());

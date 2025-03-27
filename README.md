@@ -2,82 +2,69 @@
 
 ## Setup Instructions
 
-### Prerequisites
-
-- Node.js
-- PostgreSQL
-- npm or yarn
-
-### Database Setup
-
-1. Install PostgreSQL if not already installed
-2. Open terminal and navigate to project directory:
+### 1. Clone Repository
 
 ```powershell
-cd E:\Aag\SYP\TheAlchemyofGiving
+git clone <repository-url>
+cd TheAlchemyofGiving
 ```
 
-3. Run the database script:
+### 2. Install Dependencies
 
 ```powershell
+# Backend dependencies
+cd Backend
+npm install
+
+# Frontend dependencies
+cd ../Frontend
+npm install
+```
+
+### 3. Database Setup
+
+1. Install PostgreSQL
+2. Create database and tables:
+
+```powershell
+# Navigate to project root
+cd E:\Aag\SYP\TheAlchemyofGiving
+
+# Run database setup script
 psql -U postgres -f Backend\database.sql
 ```
 
-When prompted, enter your PostgreSQL password that you set during installation.
+### 4. Environment Setup
 
-### Environment Setup
-
-1. Create a `.env` file in the Backend folder: tara backend folder ma already .env cha tesma timro postgres ko password matra rakhda huncha.
+Create `.env` file in Backend folder (Don't need to do cause its already there):
 
 ```env
 DB_USER=postgres
-DB_PASSWORD=your_postgres_password
+DB_PASSWORD=your_postgres_password  (Just update this to your postgres password)
 DB_HOST=localhost
 DB_PORT=5432
 DB_DATABASE=alchemy_giving
 ```
 
-### Backend Setup
+### 5. Start Application
 
-1. Navigate to Backend folder:
-
-```bash
+```powershell
+# Terminal 1 - Start Backend
 cd Backend
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the server:
-
-```bash
 npm run dev
-```
 
-### Frontend Setup
-
-1. Navigate to Frontend folder _new terminal ma_!!:
-
-```bash
+# Terminal 2 - Start Frontend
 cd Frontend
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the development server:
-
-```bash
 npm run dev
 ```
 
-The application should now be running at:
+### Admin Login
 
-- Frontend: http://localhost:5173
-- Backend: http://localhost:5000
+- Email: abcdahal@admin.com
+- Password: abcdahal
+
+### Note
+
+- The `database.sql` file contains all necessary table structures
+- No backup restoration needed - tables are created fresh
+- Admin user is created automatically via the setup script

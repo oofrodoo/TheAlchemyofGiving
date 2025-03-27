@@ -15,6 +15,7 @@ import AcceptableItems from "./pages/Acceptableitems";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DonateForm from "./pages/DonateForm";
 import DonatedItems from "./pages/DonatedItems";
+import AdminRoute from "./components/AdminRoute";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +38,14 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/donateform" element={<DonateForm />} />
-            <Route path="/donated-items" element={<DonatedItems />} />
+            <Route
+              path="/donated-items" // only accessible by admin
+              element={
+                <AdminRoute>
+                  <DonatedItems />
+                </AdminRoute>
+              }
+            />
           </Route>
         </Routes>
       </Router>

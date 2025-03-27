@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import NavigationBar from "../components/NavBar";
-import Footer from "../components/Footer";
 import Swal from "sweetalert2";
+import { API_BASE_URL } from "../config/api";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -14,23 +13,27 @@ const SignUp = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
+      setIsLoading(false);
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
+      const response = await fetch(`${API_BASE_URL}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.firstName + " " + formData.lastName,
+          name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
           password: formData.password,
         }),
@@ -50,7 +53,10 @@ const SignUp = () => {
         setError(data.message);
       }
     } catch (err) {
-      setError("Failed to connect to server");
+      console.error("Signup error:", err);
+      setError("Server connection failed. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 

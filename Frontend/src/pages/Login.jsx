@@ -3,16 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5001/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,19 +24,29 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
 
       if (data.success) {
         localStorage.setItem("isLoggedIn", "true");
         if (data.user.role === "admin") {
           localStorage.setItem("isAdmin", "true");
+          navigate("/donated-items"); // Admins go to donated-items page
+        } else {
+          localStorage.setItem("currentUser", JSON.stringify(data.user));
+          navigate("/home"); // users go to the homepage
         }
-        navigate("/home");
       } else {
-        setError(data.message);
+        setError(data.message || "Login failed");
       }
     } catch (err) {
-      setError("Failed to connect to server");
+      console.error("Login error:", err);
+      setError("Server connection failed. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -85,7 +99,7 @@ const Login = () => {
             type="submit"
             className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-xl shadow-lg transition duration-300"
           >
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
 
