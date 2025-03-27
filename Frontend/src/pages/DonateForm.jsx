@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
+import step1Img from "../assets/step1.jpg";
+import step2Img from "../assets/step2.png";
+import step3Img from "../assets/step3.jpg";
 
 const DonateForm = () => {
   const navigate = useNavigate();
@@ -10,10 +13,22 @@ const DonateForm = () => {
     email: "",
     phone: "",
     address: "",
+    category: "",
     items: "",
     description: "",
     image: null,
   });
+
+  const categories = [
+    "Clothing",
+    "Household Items",
+    "Toys",
+    "Electronics",
+    "Books",
+    "Equipment",
+    "Small Furniture",
+    "Miscellaneous",
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,6 +110,81 @@ const DonateForm = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Steps Section */}
+      <div className="max-w-7xl mx-auto mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900">
+            Three Simple Steps to Donate
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Step 1 */}
+          <div className="flex flex-col items-center">
+            <div className="relative w-full aspect-video mb-4">
+              <img
+                src={step1Img}
+                alt="Schedule donation pickup"
+                className="rounded-lg object-cover w-full h-full"
+              />
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center items-center mb-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Step 1</h3>
+              <p className="text-gray-600">
+                Fill out the donation form with your details and items you wish
+                to donate.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex flex-col items-center">
+            <div className="relative w-full aspect-video mb-4">
+              <img
+                src={step2Img}
+                alt="Prepare donations"
+                className="rounded-lg object-cover w-full h-full"
+              />
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center items-center mb-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Step 2</h3>
+              <p className="text-gray-600">
+                Pack your items securely and label them as "Donation Pickup".
+                Place them in an easily accessible location.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="flex flex-col items-center">
+            <div className="relative w-full aspect-video mb-4">
+              <img
+                src={step3Img}
+                alt="Donation pickup"
+                className="rounded-lg object-cover w-full h-full"
+              />
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center items-center mb-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Step 3</h3>
+              <p className="text-gray-600">
+                Our team will pick up your donations at the scheduled time.
+                You'll receive a confirmation and thank you note.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/*Form Section */}
       <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -118,7 +208,7 @@ const DonateForm = () => {
                 id="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 bg-white hover:border-gray-400 transition-colors duration-200"
                 required
               />
             </div>
@@ -136,7 +226,7 @@ const DonateForm = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 bg-white hover:border-gray-400 transition-colors duration-200"
                 required
               />
             </div>
@@ -154,7 +244,7 @@ const DonateForm = () => {
                 id="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 bg-white hover:border-gray-400 transition-colors duration-200"
                 required
               />
             </div>
@@ -172,9 +262,35 @@ const DonateForm = () => {
                 value={formData.address}
                 onChange={handleChange}
                 rows="3"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 bg-white hover:border-gray-400 transition-colors duration-200"
                 required
               />
+            </div>
+
+            <div>
+              <label
+                htmlFor="category"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Item Category
+              </label>
+              <select
+                name="category"
+                id="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 bg-white hover:border-gray-400 transition-colors duration-200"
+                required
+              >
+                <option value="" disabled>
+                  Select Category
+                </option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>
@@ -190,7 +306,7 @@ const DonateForm = () => {
                 id="items"
                 value={formData.items}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 bg-white hover:border-gray-400 transition-colors duration-200"
                 required
               />
             </div>
@@ -241,7 +357,7 @@ const DonateForm = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows="4"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 bg-white hover:border-gray-400 transition-colors duration-200"
               />
             </div>
 
