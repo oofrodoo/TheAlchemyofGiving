@@ -24,7 +24,7 @@ npm install
 
 ### Step 2: Database Setup
 
-#update .env ma timro postgres ko password
+update .env ma timro postgres ko password
 
 # Initialize database
 
