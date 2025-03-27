@@ -176,15 +176,15 @@ const initializeDatabase = async () => {
 
     // Check if admin exists
     const adminExists = await appClient.query(
-      "SELECT 1 FROM users WHERE email = 'user@example.com' AND role = 'admin'"
+      "SELECT 1 FROM users WHERE email = 'abcdahal@admin.com' AND role = 'admin'"
     );
 
     // Create admin user if doesn't exist
     if (adminExists.rows.length === 0) {
-      const hashedPassword = await bcrypt.hash("password123", 10);
+      const hashedPassword = await bcrypt.hash("abcdahal", 10);
       await appClient.query(
         "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4)",
-        ["Admin User", "user@example.com", hashedPassword, "admin"]
+        ["Admin User", "abcdahal@admin.com", hashedPassword, "admin"]
       );
       console.log("✅ Admin user created successfully");
     }
