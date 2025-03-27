@@ -2,7 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
-const pool = require("./config/db");
+const { Pool } = require("pg");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001; // Changed to 5001
@@ -10,6 +13,24 @@ const PORT = process.env.PORT || 5001; // Changed to 5001
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+// Create a pool for connecting to postgres database (for initialization)
+const initPool = new Pool({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: "postgres", // Connect to default postgres database
+});
+
+// Pool for main application database
+const appPool = new Pool({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
+});
 
 // Signup endpoint
 app.post("/api/signup", async (req, res) => {
@@ -25,7 +46,7 @@ app.post("/api/signup", async (req, res) => {
     }
 
     // Check if user exists
-    const userExists = await pool.query(
+    const userExists = await appPool.query(
       "SELECT * FROM users WHERE email = $1",
       [email]
     );
@@ -42,7 +63,7 @@ app.post("/api/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Create new user
-    const newUser = await pool.query(
+    const newUser = await appPool.query(
       "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
       [name, email, hashedPassword, "user"]
     );
@@ -65,19 +86,8 @@ app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check admin credentials
-    if (email === "user@example.com" && password === "password123") {
-      return res.json({
-        success: true,
-        user: {
-          email,
-          role: "admin",
-        },
-      });
-    }
-
-    // Find user
-    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
+    // Find user (removed hardcoded admin check)
+    const result = await appPool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
 
@@ -118,22 +128,77 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// Test database connection
-const testDbConnection = async () => {
+// Initialize database
+const initializeDatabase = async () => {
+  const client = await initPool.connect();
   try {
-    const client = await pool.connect();
-    console.log("✅ PostgreSQL database connected successfully");
+    // Check if database exists
+    const dbExists = await client.query(
+      "SELECT 1 FROM pg_database WHERE datname = $1",
+      [process.env.DB_DATABASE]
+    );
+
+    if (dbExists.rows.length === 0) {
+      // Create database if it doesn't exist
+      await client.query(`CREATE DATABASE ${process.env.DB_DATABASE}`);
+      console.log(
+        `✅ Database ${process.env.DB_DATABASE} created successfully`
+      );
+    }
+  } finally {
     client.release();
-  } catch (err) {
-    console.error("❌ PostgreSQL connection error:", err.message);
-    process.exit(1);
+  }
+
+  // Now connect to the app database and create tables
+  const appClient = await appPool.connect();
+  try {
+    // Create tables
+    await appClient.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        role VARCHAR(20) DEFAULT 'user',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS campaigns (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(200) NOT NULL,
+        description TEXT,
+        goal DECIMAL NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        user_id INTEGER REFERENCES users(id)
+      );
+      -- Add other table creation statements as needed
+    `);
+
+    // Check if admin exists
+    const adminExists = await appClient.query(
+      "SELECT 1 FROM users WHERE email = 'user@example.com' AND role = 'admin'"
+    );
+
+    // Create admin user if doesn't exist
+    if (adminExists.rows.length === 0) {
+      const hashedPassword = await bcrypt.hash("password123", 10);
+      await appClient.query(
+        "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4)",
+        ["Admin User", "user@example.com", hashedPassword, "admin"]
+      );
+      console.log("✅ Admin user created successfully");
+    }
+
+    console.log("✅ Tables created successfully");
+  } finally {
+    appClient.release();
   }
 };
 
 // Start server after testing database connection
 const startServer = async () => {
   try {
-    await testDbConnection();
+    await initializeDatabase();
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });

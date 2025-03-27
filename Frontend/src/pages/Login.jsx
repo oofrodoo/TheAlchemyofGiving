@@ -44,7 +44,7 @@ const Login = () => {
       }
     } catch (err) {
       console.error("Login error:", err);
-      setError("Server connection failed. Please try again later.");
+      setError("Incorrect Email address or Password");
     } finally {
       setIsLoading(false);
     }
