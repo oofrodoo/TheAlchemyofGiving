@@ -1,5 +1,11 @@
+-- Drop and create database
+DROP DATABASE IF EXISTS alchemy_giving;
 CREATE DATABASE alchemy_giving;
 
+-- Connect to the database
+\c alchemy_giving;
+
+-- Create tables
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
